@@ -8,6 +8,13 @@ From terminal run:
 npm install
 ```
 
+Installation of less and less watcher:
+```sh
+npm install -g less
+npm install -g less-watch-compiler
+```
+
+
 ## Bulding
 From terminal run:
 ```sh
