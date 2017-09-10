@@ -1,5 +1,14 @@
-import Test from './test.js';
+import IsometricGrid from './isometric-grid.js'
 
-export default function () {
-  let test = new Test()
+class Game {
+  constructor () {
+    this.background = new IsometricGrid()
+  }
+
+  start () {
+    this.background.render()
+  }
 }
+
+const game = new Game()
+game.start()
