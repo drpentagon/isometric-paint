@@ -1,0 +1,31 @@
+{
+  "name": "isometric-paint",
+  "version": "1.0.0",
+  "description": "An app that makes it easy easy to create isometric graphics on desktops, tablets and phones.",
+  "main": "index.html",
+  "dependencies": {},
+  "devDependencies": {
+    "rollup-plugin-uglify": "^2.0.1",
+    "uglify-es": "^3.0.28"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drpentagon/isometric-paint.git"
+  },
+  "keywords": [
+    "javascript",
+    "canvas",
+    "graphic",
+    "paint",
+    "game"
+  ],
+  "author": "Martin Svärd",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/drpentagon/isometric-paint/issues"
+  },
+  "homepage": "https://github.com/drpentagon/isometric-paint#readme"
+}
