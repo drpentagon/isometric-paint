@@ -1,4 +1,5 @@
 // import {createCanvas, clearCanvas, square} from './graphics-handler.js';
+const ALPHA = Math.tan(30 * Math.PI / 180)
 
 export default class IsometricGrid {
   constructor () {
@@ -23,7 +24,19 @@ export default class IsometricGrid {
   }
 
   renderUpwardDiagonals () {
-    console.log('render upward diagonals')
+    const screenWidth = window.innerWidth
+    const screenHeight = window.innerHeight
+    const zoom = 40
+    var startX
+
+    this.ctx.strokeStyle = '#ff0000'
+    for (startX = -1 * screenWidth; startX < screenWidth; startX += zoom) {
+      let width = screenWidth - startX
+      this.ctx.beginPath()
+      this.ctx.moveTo(startX, screenHeight)
+      this.ctx.lineTo(screenWidth, screenHeight - (width * ALPHA))
+      this.ctx.stroke()
+    }
   }
 
   renderDownwardDiagonals () {
