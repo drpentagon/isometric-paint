@@ -15,42 +15,49 @@ export default class IsometricGrid {
 
     document.querySelector('.graphics-wrapper').appendChild(canvas)
     this.ctx = canvas.getContext('2d')
-    this.zoom = 40
+    this.zoom = 100
     this.pan = {x: 0, y: 0}
   }
 
   render () {
+    this.ctx.strokeStyle = '#ff0000'
+    this.ctx.lineWidth = 1
     this.renderUpwardDiagonals()
     this.renderDownwardDiagonals()
     this.renderVerticals()
   }
 
   renderUpwardDiagonals () {
-    let a
-    this.ctx.strokeStyle = '#ff0000'
-    for (a = -50 * 40; a <= 50 * 40; a += 40) {
+    for (let a = -100; a <= 200; a++) {
       this.drawLine(this.getLineIntersections(a, ALPHA))
     }
   }
 
   renderDownwardDiagonals () {
-    let a
-    this.ctx.strokeStyle = '#ff0000'
-    for (a = -50 * 40; a <= 50 * 40; a += 40) {
+    for (let a = -0; a <= 200; a++) {
       this.drawLine(this.getLineIntersections(a, -ALPHA))
     }
   }
 
   renderVerticals () {
-    console.log('render verticals')
+    const yMin = this.pan.y / this.zoom
+    const yMax = yMin + window.innerHeight / this.zoom
+    let a
+    for (let a = 0; a <= 100 / ALPHA; a += 0.5 / ALPHA) {
+      const l = {
+        p1: {x: a, y: yMin},
+        p2: {x: a, y: yMax}
+      }
+      this.drawLine(l)
+    }
   }
 
   // Line written in the format y = a + b * x
   getLineIntersections (a, b) {
-    const vpMin = {x: this.pan.x, y: this.pan.y}
+    const vpMin = {x: this.pan.x / this.zoom, y: this.pan.y / this.zoom}
     const vpMax = {
-      x: vpMin.x + (window.innerWidth),
-      y: vpMin.y + (window.innerHeight)
+      x: vpMin.x + (window.innerWidth / this.zoom),
+      y: vpMin.y + (window.innerHeight / this.zoom)
     }
     const l = {p1: {}, p2: {}}
 
@@ -69,8 +76,8 @@ export default class IsometricGrid {
 
   drawLine (l) {
     this.ctx.beginPath()
-    this.ctx.moveTo(l.p1.x, l.p1.y)
-    this.ctx.lineTo(l.p2.x, l.p2.y)
+    this.ctx.moveTo(l.p1.x * this.zoom, l.p1.y * this.zoom)
+    this.ctx.lineTo(l.p2.x * this.zoom, l.p2.y * this.zoom)
     this.ctx.stroke()
   }
 }
