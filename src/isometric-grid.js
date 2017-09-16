@@ -15,6 +15,8 @@ export default class IsometricGrid {
 
     document.querySelector('.graphics-wrapper').appendChild(canvas)
     this.ctx = canvas.getContext('2d')
+    this.zoom = 40
+    this.pan = {x: 0, y: 0}
   }
 
   render () {
@@ -24,26 +26,51 @@ export default class IsometricGrid {
   }
 
   renderUpwardDiagonals () {
-    const screenWidth = window.innerWidth
-    const screenHeight = window.innerHeight
-    const zoom = 40
-    var startX
-
+    let a
     this.ctx.strokeStyle = '#ff0000'
-    for (startX = -1 * screenWidth; startX < screenWidth; startX += zoom) {
-      let width = screenWidth - startX
-      this.ctx.beginPath()
-      this.ctx.moveTo(startX, screenHeight)
-      this.ctx.lineTo(screenWidth, screenHeight - (width * ALPHA))
-      this.ctx.stroke()
+    for (a = -50 * 40; a <= 50 * 40; a += 40) {
+      this.drawLine(this.getLineIntersections(a, ALPHA))
     }
   }
 
   renderDownwardDiagonals () {
-    console.log('render downward diagonals')
+    let a
+    this.ctx.strokeStyle = '#ff0000'
+    for (a = -50 * 40; a <= 50 * 40; a += 40) {
+      this.drawLine(this.getLineIntersections(a, -ALPHA))
+    }
   }
 
   renderVerticals () {
     console.log('render verticals')
+  }
+
+  // Line written in the format y = a + b * x
+  getLineIntersections (a, b) {
+    const vpMin = {x: this.pan.x, y: this.pan.y}
+    const vpMax = {
+      x: vpMin.x + (window.innerWidth),
+      y: vpMin.y + (window.innerHeight)
+    }
+    const l = {p1: {}, p2: {}}
+
+    l.p1.y = a + b * vpMin.x
+    l.p1.y = Math.max(l.p1.y, vpMin.y)
+    l.p1.y = Math.min(l.p1.y, vpMax.y)
+    l.p1.x = (l.p1.y - a) / b
+
+    l.p2.y = a + b * vpMax.x
+    l.p2.y = Math.max(l.p2.y, vpMin.y)
+    l.p2.y = Math.min(l.p2.y, vpMax.y)
+    l.p2.x = (l.p2.y - a) / b
+
+    return l
+  }
+
+  drawLine (l) {
+    this.ctx.beginPath()
+    this.ctx.moveTo(l.p1.x, l.p1.y)
+    this.ctx.lineTo(l.p2.x, l.p2.y)
+    this.ctx.stroke()
   }
 }
