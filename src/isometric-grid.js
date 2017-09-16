@@ -20,7 +20,13 @@ export default class IsometricGrid {
   }
 
   render () {
-    this.ctx.strokeStyle = '#ff0000'
+    this.vpMin = {x: this.pan.x / this.zoom, y: this.pan.y / this.zoom}
+    this.vpMax = {
+      x: this.vpMin.x + (window.innerWidth / this.zoom),
+      y: this.vpMin.y + (window.innerHeight / this.zoom)
+    }
+
+    this.ctx.strokeStyle = '#999999'
     this.ctx.lineWidth = 1
     this.renderUpwardDiagonals()
     this.renderDownwardDiagonals()
@@ -40,13 +46,10 @@ export default class IsometricGrid {
   }
 
   renderVerticals () {
-    const yMin = this.pan.y / this.zoom
-    const yMax = yMin + window.innerHeight / this.zoom
-    let a
     for (let a = 0; a <= 100 / ALPHA; a += 0.5 / ALPHA) {
       const l = {
-        p1: {x: a, y: yMin},
-        p2: {x: a, y: yMax}
+        p1: {x: a, y: this.vpMin.y},
+        p2: {x: a, y: this.vpMax.y}
       }
       this.drawLine(l)
     }
@@ -54,21 +57,15 @@ export default class IsometricGrid {
 
   // Line written in the format y = a + b * x
   getLineIntersections (a, b) {
-    const vpMin = {x: this.pan.x / this.zoom, y: this.pan.y / this.zoom}
-    const vpMax = {
-      x: vpMin.x + (window.innerWidth / this.zoom),
-      y: vpMin.y + (window.innerHeight / this.zoom)
-    }
     const l = {p1: {}, p2: {}}
-
-    l.p1.y = a + b * vpMin.x
-    l.p1.y = Math.max(l.p1.y, vpMin.y)
-    l.p1.y = Math.min(l.p1.y, vpMax.y)
+    l.p1.y = a + b * this.vpMin.x
+    l.p1.y = Math.max(l.p1.y, this.vpMin.y)
+    l.p1.y = Math.min(l.p1.y, this.vpMax.y)
     l.p1.x = (l.p1.y - a) / b
 
-    l.p2.y = a + b * vpMax.x
-    l.p2.y = Math.max(l.p2.y, vpMin.y)
-    l.p2.y = Math.min(l.p2.y, vpMax.y)
+    l.p2.y = a + b * this.vpMax.x
+    l.p2.y = Math.max(l.p2.y, this.vpMin.y)
+    l.p2.y = Math.min(l.p2.y, this.vpMax.y)
     l.p2.x = (l.p2.y - a) / b
 
     return l
