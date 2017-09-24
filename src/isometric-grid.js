@@ -1,80 +1,71 @@
-// import {createCanvas, clearCanvas, square} from './graphics-handler.js';
+import gtr from './global-translation.js'
+import GraphicsHandler from './graphics-handler.js'
+
 const ALPHA = Math.tan(30 * Math.PI / 180)
+const CONTAINER = document.querySelector('.graphics-wrapper')
 
 export default class IsometricGrid {
   constructor () {
-    const width = window.innerWidth
-    const height = window.innerHeight
+    this.gh = new GraphicsHandler(CONTAINER)
 
-    const canvas = document.createElement('canvas')
-    canvas.className = 'canvas'
-    canvas.setAttribute('width', width)
-    canvas.setAttribute('height', height)
-    canvas.style.width = width + 'px'
-    canvas.style.height = height + 'px'
+    this.gh.strokeStyle = '#ffdddd'
+    this.gh.fillStyle = 'rgba(0, 0, 0, 0.02)'
 
-    document.querySelector('.graphics-wrapper').appendChild(canvas)
-    this.ctx = canvas.getContext('2d')
-    this.zoom = 100
-    this.pan = {x: 0, y: 0}
+    this.setViewort()
+  }
+
+  setViewort () {
+    this.upperLeft = gtr.toGlobal(0, 0)
+    this.bottomRight = gtr.toGlobal(CONTAINER.offsetWidth, CONTAINER.offsetHeight)
   }
 
   render () {
-    this.vpMin = {x: this.pan.x / this.zoom, y: this.pan.y / this.zoom}
-    this.vpMax = {
-      x: this.vpMin.x + (window.innerWidth / this.zoom),
-      y: this.vpMin.y + (window.innerHeight / this.zoom)
-    }
-
-    this.ctx.strokeStyle = '#999999'
-    this.ctx.lineWidth = 1
     this.renderUpwardDiagonals()
     this.renderDownwardDiagonals()
     this.renderVerticals()
   }
 
   renderUpwardDiagonals () {
-    for (let a = -100; a <= 200; a++) {
-      this.drawLine(this.getLineIntersections(a, ALPHA))
+    for (let a = -100; a <= 200; a += 2) {
+      const p1 = this.getLineIntersections(a, ALPHA)
+      const p2 = this.getLineIntersections(a + 1, ALPHA)
+      this.gh.drawPolygon([p1[0], p1[1], p2[1], p2[0]])
     }
   }
 
   renderDownwardDiagonals () {
-    for (let a = -0; a <= 200; a++) {
-      this.drawLine(this.getLineIntersections(a, -ALPHA))
+    for (let a = -0; a <= 200; a += 2) {
+      const p1 = this.getLineIntersections(a, -ALPHA)
+      const p2 = this.getLineIntersections(a + 1, -ALPHA)
+      this.gh.drawPolygon([p1[0], p1[1], p2[1], p2[0]])
     }
   }
 
   renderVerticals () {
-    for (let a = 0; a <= 100 / ALPHA; a += 0.5 / ALPHA) {
-      const l = {
-        p1: {x: a, y: this.vpMin.y},
-        p2: {x: a, y: this.vpMax.y}
-      }
-      this.drawLine(l)
+    for (let a = 0; a <= 100 / ALPHA; a += 1 / ALPHA) {
+      const poly = [
+        {x: a, y: this.upperLeft.y},
+        {x: a, y: this.bottomRight.y},
+        {x: a + 0.5 / ALPHA, y: this.bottomRight.y},
+        {x: a + 0.5 / ALPHA, y: this.upperLeft.y}
+      ]
+
+      this.gh.drawPolygon(poly)
     }
   }
 
   // Line written in the format y = a + b * x
   getLineIntersections (a, b) {
-    const l = {p1: {}, p2: {}}
-    l.p1.y = a + b * this.vpMin.x
-    l.p1.y = Math.max(l.p1.y, this.vpMin.y)
-    l.p1.y = Math.min(l.p1.y, this.vpMax.y)
-    l.p1.x = (l.p1.y - a) / b
+    const l = [{}, {}]
+    l[0].y = a + b * this.upperLeft.x
+    l[0].y = Math.max(l[0].y, this.upperLeft.y)
+    l[0].y = Math.min(l[0].y, this.bottomRight.y)
+    l[0].x = (l[0].y - a) / b
 
-    l.p2.y = a + b * this.vpMax.x
-    l.p2.y = Math.max(l.p2.y, this.vpMin.y)
-    l.p2.y = Math.min(l.p2.y, this.vpMax.y)
-    l.p2.x = (l.p2.y - a) / b
-
+    l[1].y = a + b * this.bottomRight.x
+    l[1].y = Math.max(l[1].y, this.upperLeft.y)
+    l[1].y = Math.min(l[1].y, this.bottomRight.y)
+    l[1].x = (l[1].y - a) / b
     return l
-  }
-
-  drawLine (l) {
-    this.ctx.beginPath()
-    this.ctx.moveTo(l.p1.x * this.zoom, l.p1.y * this.zoom)
-    this.ctx.lineTo(l.p2.x * this.zoom, l.p2.y * this.zoom)
-    this.ctx.stroke()
   }
 }
