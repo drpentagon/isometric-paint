@@ -11,9 +11,12 @@ export default class GridInteraction {
   }
 
   render () {
+    const gPos = gtr.toGlobal(MouseHandler.position().x, MouseHandler.position().y)
+
     this.gh.clearCanvas()
+
     this.gh.writeText(`zoom: ${gtr.zoom}`, 20, 20)
-    this.gh.writeText(`x: ${MouseHandler.position().x}`, 100, 20)
-    this.gh.writeText(`y: ${MouseHandler.position().y}`, 180, 20)
+    this.gh.writeText(`x: ${gPos.x}`, 100, 20)
+    this.gh.writeText(`y: ${gPos.y}`, 180, 20)
   }
 }
