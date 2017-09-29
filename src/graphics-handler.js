@@ -15,6 +15,14 @@ export default class GraphicsHandler {
     parent_.appendChild(this.canvas)
     this.ctx = this.canvas.getContext('2d')
     this.ctx.lineWidth = 0.5
+    this.ctx.font = `20px Miso`
+    this.ctx.textBaseline = 'top'
+  }
+
+  clearCanvas () {
+    const {ctx, canvas} = this
+    ctx.setTransform(1, 0, 0, 1, 0, 0)
+    ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight)
   }
 
   set strokeStyle (style_) {
@@ -42,5 +50,11 @@ export default class GraphicsHandler {
     }
     ctx.stroke()
     ctx.fill()
+  }
+
+  writeText (text_, x_, y_) {
+    const {ctx} = this
+
+    ctx.fillText(text_, x_, y_)
   }
 }
