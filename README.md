@@ -25,3 +25,8 @@ or with watcher:
 ```sh
 rollup -c -w
 ```
+
+Starting less watcher:
+```sh
+less-watch-compiler styling build main.less
+```
