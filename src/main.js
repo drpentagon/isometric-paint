@@ -1,6 +1,9 @@
 import gtr from './global-translation.js'
 import IsometricGrid from './isometric-grid.js'
+import Layer from './layer.js'
+import MouseHandler from './mouse-handler.js'
 import GridInteraction from './grid-interaction.js'
+import {getIsometricCoordinate} from './isometric-math.js'
 
 class Application {
   constructor () {
@@ -8,7 +11,17 @@ class Application {
     gtr.pan = {x: 0, y: 0}
 
     this.background = new IsometricGrid()
-    this.interactionLayer = new GridInteraction()
+    this.layer = new Layer()
+    this.hud = new GridInteraction()
+
+    document.querySelector('body').addEventListener('click', () => this.handleMouseCLick())
+  }
+
+  handleMouseCLick () {
+    const gPos = gtr.toGlobal(MouseHandler.position().x, MouseHandler.position().y)
+    const isoCoord = getIsometricCoordinate(gPos.x, gPos.y)
+    this.layer.addTriangle(isoCoord.a1, isoCoord.a2, isoCoord.right, '#000000')
+    this.layer.render()
   }
 
   start () {
@@ -17,7 +30,7 @@ class Application {
   }
 
   loop () {
-    this.interactionLayer.render()
+    this.hud.render()
     requestAnimationFrame(() => this.loop())
   }
 

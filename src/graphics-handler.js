@@ -1,5 +1,7 @@
 import gtr from './global-translation.js'
 
+const ALPHA = Math.tan(30 * Math.PI / 180)
+
 export default class GraphicsHandler {
   constructor (parent_) {
     const width = parent_.offsetWidth
@@ -41,6 +43,19 @@ export default class GraphicsHandler {
     ctx.stroke()
   }
 
+  drawTriangle (a1, a2, right) {
+    const poly = []
+    poly.push(this.getIntersection(a1, a2))
+    poly.push(this.getIntersection(a1 + 1, a2 + 1))
+    if (right) {
+      poly.push(this.getIntersection(a1, a2 + 1))
+    } else {
+      poly.push(this.getIntersection(a1 + 1, a2))
+    }
+
+    this.drawPolygon(poly)
+  }
+
   drawPolygon (pts_) {
     const {ctx} = this
     ctx.beginPath()
@@ -56,5 +71,11 @@ export default class GraphicsHandler {
     const {ctx} = this
 
     ctx.fillText(text_, x_, y_)
+  }
+
+  getIntersection (a1, a2) {
+    const x = (a2 - a1) / (2 * ALPHA)
+    const y = a1 + ALPHA * x
+    return {x: x, y: y}
   }
 }

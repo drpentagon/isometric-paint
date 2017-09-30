@@ -22,6 +22,11 @@
     "paint",
     "game"
   ],
+  "standard": {
+    "globals": [
+      "requestAnimationFrame"
+    ]
+  },
   "author": "Martin Svärd",
   "license": "ISC",
   "bugs": {
