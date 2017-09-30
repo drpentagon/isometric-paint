@@ -4,6 +4,7 @@ import Layer from './layer.js'
 import MouseHandler from './mouse-handler.js'
 import GridInteraction from './grid-interaction.js'
 import {getIsometricCoordinate} from './isometric-math.js'
+import Palette from './palette.js'
 
 class Application {
   constructor () {
