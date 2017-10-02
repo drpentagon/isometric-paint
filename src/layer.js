@@ -2,10 +2,11 @@ import GraphicsHandler from './graphics-handler.js'
 const CONTAINER = document.querySelector('.graphics-wrapper')
 
 export default class Layer {
-  constructor () {
+  constructor (name) {
     this.gh = new GraphicsHandler(CONTAINER)
     this.gh.lineWidth = 1
-    this.triangles = []
+    this.triangles = localStorage.painting ? JSON.parse(localStorage.painting) : []
+    this.render()
   }
 
   addTriangle (a1, a2, right, color) {
@@ -15,6 +16,8 @@ export default class Layer {
       right: right,
       color: color
     })
+
+    localStorage.painting = JSON.stringify(this.triangles)
   }
 
   render () {

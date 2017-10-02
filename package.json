@@ -24,7 +24,8 @@
   ],
   "standard": {
     "globals": [
-      "requestAnimationFrame"
+      "requestAnimationFrame",
+      "localStorage"
     ]
   },
   "author": "Martin Svärd",

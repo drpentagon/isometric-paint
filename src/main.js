@@ -13,6 +13,7 @@ class Application {
 
     this.background = new IsometricGrid()
     this.layer = new Layer()
+    
     this.hud = new GridInteraction()
 
     document.querySelector('.graphics-wrapper').addEventListener('click', () => this.handleMouseCLick())
