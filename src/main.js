@@ -15,13 +15,13 @@ class Application {
     this.layer = new Layer()
     this.hud = new GridInteraction()
 
-    document.querySelector('body').addEventListener('click', () => this.handleMouseCLick())
+    document.querySelector('.graphics-wrapper').addEventListener('click', () => this.handleMouseCLick())
   }
 
   handleMouseCLick () {
     const gPos = gtr.toGlobal(MouseHandler.position().x, MouseHandler.position().y)
     const isoCoord = getIsometricCoordinate(gPos.x, gPos.y)
-    this.layer.addTriangle(isoCoord.a1, isoCoord.a2, isoCoord.right, '#000000')
+    this.layer.addTriangle(isoCoord.a1, isoCoord.a2, isoCoord.right, Palette.color)
     this.layer.render()
   }
 

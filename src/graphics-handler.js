@@ -35,6 +35,10 @@ export default class GraphicsHandler {
     this.ctx.fillStyle = style_
   }
 
+  set lineWidth (width_) {
+    this.ctx.lineWidth = width_
+  }
+
   drawLine (l_) {
     const {ctx} = this
     ctx.beginPath()

@@ -4,6 +4,7 @@ const CONTAINER = document.querySelector('.graphics-wrapper')
 export default class Layer {
   constructor () {
     this.gh = new GraphicsHandler(CONTAINER)
+    this.gh.lineWidth = 1
     this.triangles = []
   }
 
@@ -21,6 +22,7 @@ export default class Layer {
     this.triangles.forEach((t) => {
       const {a1, a2, right, color} = t
       this.gh.fillStyle = color
+      this.gh.strokeStyle = color
       this.gh.drawTriangle(a1, a2, right)
     })
   }
