@@ -44,7 +44,15 @@ class Palette {
   }
 
   pickColor (e) {
-    this.currentColor = e.currentTarget.dataset.color
+    const color = e.currentTarget
+    const previous = document.querySelector('.color--active')
+    if (previous) {
+      previous.classList.remove('color--active')
+    }
+
+    color.classList.add('color--active')
+    this.currentColor = color.dataset.color
+
   }
 
   getLuminance (r_, g_, b_) {
