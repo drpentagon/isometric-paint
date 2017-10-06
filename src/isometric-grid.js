@@ -20,6 +20,7 @@ export default class IsometricGrid {
   }
 
   render () {
+    this.gh.clearCanvas()
     this.renderUpwardDiagonals()
     this.renderDownwardDiagonals()
     this.renderVerticals()

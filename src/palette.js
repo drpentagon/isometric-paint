@@ -52,7 +52,6 @@ class Palette {
 
     color.classList.add('color--active')
     this.currentColor = color.dataset.color
-
   }
 
   getLuminance (r_, g_, b_) {

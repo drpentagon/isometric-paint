@@ -15,6 +15,8 @@ class GlobalTranslation {
   set pan (p_) {
     this.p.x = p_.x
     this.p.y = p_.y
+
+    console.log(this.p)
   }
 
   get pan () {

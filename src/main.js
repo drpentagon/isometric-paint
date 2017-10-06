@@ -1,28 +1,41 @@
 import gtr from './global-translation.js'
 import IsometricGrid from './isometric-grid.js'
 import Layer from './layer.js'
-import MouseHandler from './mouse-handler.js'
 import GridInteraction from './grid-interaction.js'
 import {getIsometricCoordinate} from './isometric-math.js'
 import Palette from './palette.js'
 
+const CONTAINER = document.querySelector('.graphics-wrapper')
+
 class Application {
   constructor () {
-    gtr.zoom = 80
+    gtr.zoom = 20
     gtr.pan = {x: 0, y: 0}
 
     this.background = new IsometricGrid()
     this.layer = new Layer()
-    
+
     this.hud = new GridInteraction()
 
-    document.querySelector('.graphics-wrapper').addEventListener('click', () => this.handleMouseCLick())
+    var hammer = new Hammer(CONTAINER)
+    hammer.on('tap', (ev) => this.handleMouseCLick(ev))
+    hammer.on('panend', (ev) => this.handlePanEnd(ev))
   }
 
-  handleMouseCLick () {
-    const gPos = gtr.toGlobal(MouseHandler.position().x, MouseHandler.position().y)
+  handleMouseCLick (event) {
+    const x = event.center.x - CONTAINER.getBoundingClientRect().left
+    const y = event.center.y - CONTAINER.getBoundingClientRect().top
+    const gPos = gtr.toGlobal(x, y)
     const isoCoord = getIsometricCoordinate(gPos.x, gPos.y)
     this.layer.addTriangle(isoCoord.a1, isoCoord.a2, isoCoord.right, Palette.color)
+    this.layer.render()
+  }
+
+  handlePanEnd (event) {
+    const gPos = gtr.toGlobal(event.deltaX, event.deltaY)
+    const isoCoord = getExactIsometricCoordinate(gPos.x, gPos.y)
+    gtr.pan = gtr.toGlobal(isoCoord.a1, isoCoord.a2)
+    this.background.render()
     this.layer.render()
   }
 

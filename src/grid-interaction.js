@@ -21,8 +21,4 @@ export default class GridInteraction {
     this.gh.fillStyle = '#222222'
     this.gh.writeText(`zoom: ${gtr.zoom}`, 20, 20)
   }
-
-  getDiagonalOffset (p, angle) {
-    return Math.floor(p.y - angle * p.x)
-  }
 }
