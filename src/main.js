@@ -32,7 +32,8 @@ class Application {
   }
 
   handlePanEnd (event) {
-    gtr.pan = gtr.toGlobal(event.deltaX, event.deltaY)
+    console.log('panEnd', event.deltaX, event.deltaY)
+    gtr.pan = gtr.scaleToGlobal(event.deltaX, event.deltaY)
     this.background.render()
     this.layer.render()
   }

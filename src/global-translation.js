@@ -30,6 +30,10 @@ class GlobalTranslation {
   toGlobal (x_, y_) {
     return {x: x_ / this.zoom - this.p.x, y: y_ / this.zoom - this.p.y}
   }
+
+  scaleToGlobal (x_, y_) {
+    return {x: x_ / this.zoom, y: y_ / this.zoom}
+  }
 }
 
 export default new GlobalTranslation()

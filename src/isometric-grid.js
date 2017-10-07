@@ -15,12 +15,17 @@ export default class IsometricGrid {
   }
 
   setViewort () {
-    this.upperLeft = gtr.toGlobal(0, 0)
-    this.bottomRight = gtr.toGlobal(CONTAINER.offsetWidth, CONTAINER.offsetHeight)
+    this.upperLeft = {}
+    this.upperLeft.x = -gtr.pan.x
+    this.upperLeft.y = -gtr.pan.y
+    this.bottomRight = gtr.scaleToGlobal(CONTAINER.offsetWidth, CONTAINER.offsetHeight)
+    this.bottomRight.x += this.upperLeft.x
+    this.bottomRight.y += this.upperLeft.y
   }
 
   render () {
     this.gh.clearCanvas()
+    this.setViewort()
     this.renderUpwardDiagonals()
     this.renderDownwardDiagonals()
     this.renderVerticals()
@@ -35,7 +40,7 @@ export default class IsometricGrid {
   }
 
   renderDownwardDiagonals () {
-    for (let a = -0; a <= 200; a += 2) {
+    for (let a = -100; a <= 200; a += 2) {
       const p1 = this.getLineIntersections(a, -ALPHA)
       const p2 = this.getLineIntersections(a + 1, -ALPHA)
       this.gh.drawPolygon([p1[0], p1[1], p2[1], p2[0]])
@@ -43,7 +48,7 @@ export default class IsometricGrid {
   }
 
   renderVerticals () {
-    for (let a = 0; a <= 100 / ALPHA; a += 1 / ALPHA) {
+    for (let a = -100 / ALPHA; a <= 100 / ALPHA; a += 1 / ALPHA) {
       const poly = [
         {x: a, y: this.upperLeft.y},
         {x: a, y: this.bottomRight.y},
@@ -57,6 +62,7 @@ export default class IsometricGrid {
 
   // Line written in the format y = a + b * x
   getLineIntersections (a, b) {
+    //console.log(this.upperLeft.x)
     const l = [{}, {}]
     l[0].y = a + b * this.upperLeft.x
     l[0].y = Math.max(l[0].y, this.upperLeft.y)
