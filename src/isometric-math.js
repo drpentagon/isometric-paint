@@ -1,8 +1,6 @@
 const ALPHA = Math.tan(30 * Math.PI / 180)
 
 export function getIsometricCoordinate (x_, y_) {
-//  const a1 = getDiagonalOffset(x_, y_, ALPHA)
-//  const a2 = getDiagonalOffset(x_, y_, -ALPHA)
   const coord = getExactIsometricCoordinate(x_, y_)
   coord.a1 = Math.floor(coord.a1)
   coord.a2 = Math.floor(coord.a2)

@@ -13,8 +13,8 @@ class GlobalTranslation {
   }
 
   set pan (p_) {
-    this.p.x = p_.x
-    this.p.y = p_.y
+    this.p.x += p_.x
+    this.p.y += p_.y
 
     console.log(this.p)
   }
@@ -24,7 +24,7 @@ class GlobalTranslation {
   }
 
   toScreen (p_) {
-    return [p_.x * this.zoom, p_.y * this.zoom]
+    return [(p_.x + this.p.x) * this.zoom, (p_.y + this.p.y) * this.zoom]
   }
 
   toGlobal (x_, y_) {

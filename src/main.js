@@ -9,7 +9,7 @@ const CONTAINER = document.querySelector('.graphics-wrapper')
 
 class Application {
   constructor () {
-    gtr.zoom = 20
+    gtr.zoom = 32
     gtr.pan = {x: 0, y: 0}
 
     this.background = new IsometricGrid()
@@ -32,16 +32,14 @@ class Application {
   }
 
   handlePanEnd (event) {
-    const gPos = gtr.toGlobal(event.deltaX, event.deltaY)
-    const isoCoord = getExactIsometricCoordinate(gPos.x, gPos.y)
-    gtr.pan = gtr.toGlobal(isoCoord.a1, isoCoord.a2)
+    gtr.pan = gtr.toGlobal(event.deltaX, event.deltaY)
     this.background.render()
     this.layer.render()
   }
 
   start () {
     this.background.render()
-    this.loop()
+//    this.loop()
   }
 
   loop () {
