@@ -1,6 +1,6 @@
 class Palette {
   constructor () {
-    this.palette = document.querySelector('.palette')
+    this.palette = document.querySelector('.main-menu')
     this.currentColor = 'rgb(49, 43, 43)'
 
     this.addColor('Black', 49, 43, 43, '100')
@@ -16,24 +16,22 @@ class Palette {
   }
 
   addColor (name_, r_, g_, b_) {
-    let textModifier = 'color__label--light'
+    let textModifier = 'button__label--light'
     const rgb = `rgb(${r_}, ${g_}, ${b_})`
 
     if (this.getLuminance(r_, g_, b_) > 128) {
-      textModifier = 'color__label--dark'
+      textModifier = 'button__label--dark'
     }
 
-    const color = document.createElement('article')
-    color.className = 'color'
-    color.dataset.color = rgb
-    color.style.backgroundColor = rgb
-
     const label = document.createElement('label')
-    label.className = `color__label ${textModifier}`
+    label.className = `button__label ${textModifier}`
     label.innerHTML = name_
 
+    const color = document.createElement('article')
+    color.className = 'button'
+    color.dataset.color = rgb
+    color.style.backgroundColor = rgb
     color.appendChild(label)
-
     color.addEventListener('click', (e) => this.pickColor(e))
 
     this.palette.appendChild(color)
