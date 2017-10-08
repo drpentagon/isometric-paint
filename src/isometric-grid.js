@@ -62,7 +62,6 @@ export default class IsometricGrid {
 
   // Line written in the format y = a + b * x
   getLineIntersections (a, b) {
-    //console.log(this.upperLeft.x)
     const l = [{}, {}]
     l[0].y = a + b * this.upperLeft.x
     l[0].y = Math.max(l[0].y, this.upperLeft.y)

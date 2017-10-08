@@ -10,6 +10,10 @@ export default class GridInteraction {
     this.gh = new GraphicsHandler(CONTAINER)
   }
 
+  clear () {
+    this.gh.clearCanvas()
+  }
+
   render () {
     const gPos = gtr.toGlobal(MouseHandler.position().x, MouseHandler.position().y)
     const isoCoord = getIsometricCoordinate(gPos.x, gPos.y)

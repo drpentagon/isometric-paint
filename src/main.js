@@ -19,6 +19,8 @@ class Application {
 
     var hammer = new Hammer(CONTAINER)
     hammer.on('tap', (ev) => this.handleMouseCLick(ev))
+    hammer.on('panstart', (ev) => this.handlePanStart(ev))
+    hammer.on('panmove', (ev) => this.updatePanPosition(ev))
     hammer.on('panend', (ev) => this.handlePanEnd(ev))
   }
 
@@ -31,20 +33,40 @@ class Application {
     this.layer.render()
   }
 
+  handlePanStart (event) {
+    this.panStart = {x: gtr.pan.x, y: gtr.pan.y}
+    this.panActive = true
+    this.hud.clear()
+    this.updatePanPosition(event)
+  }
+
   handlePanEnd (event) {
-    console.log('panEnd', event.deltaX, event.deltaY)
-    gtr.pan = gtr.scaleToGlobal(event.deltaX, event.deltaY)
+    this.updatePanPosition(event)
+    this.panActive = false
+  }
+
+  updatePanPosition (event) {
+    const delta = gtr.scaleToGlobal(event.deltaX, event.deltaY)
+    gtr.pan.x = this.panStart.x + delta.x
+    gtr.pan.y = this.panStart.y + delta.y
+  }
+
+  renderAll () {
     this.background.render()
     this.layer.render()
   }
 
   start () {
     this.background.render()
-//    this.loop()
+    this.loop()
   }
 
   loop () {
-    this.hud.render()
+    if (this.panActive) {
+      this.renderAll()
+    } else {
+      this.hud.render()
+    }
     requestAnimationFrame(() => this.loop())
   }
 
