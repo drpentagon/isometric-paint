@@ -12,6 +12,16 @@ class GlobalTranslation {
     return this.zoomLevel
   }
 
+  zoomIn () {
+    this.zoomLevel = this.zoomLevel * 2
+  }
+
+  zoomOut () {
+    if (this.zoomLevel > 2) {
+      this.zoomLevel = this.zoomLevel / 2
+    }
+  }
+
   set pan (p_) {
     this.p.x += p_.x
     this.p.y += p_.y
