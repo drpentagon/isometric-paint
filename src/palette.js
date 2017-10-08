@@ -26,17 +26,13 @@ class Palette {
     const color = document.createElement('article')
     color.className = 'color'
     color.dataset.color = rgb
-
-    const example = document.createElement('figure')
-    example.className = 'color__example'
-    example.style.backgroundColor = rgb
+    color.style.backgroundColor = rgb
 
     const label = document.createElement('label')
     label.className = `color__label ${textModifier}`
     label.innerHTML = name_
 
-    example.appendChild(label)
-    color.appendChild(example)
+    color.appendChild(label)
 
     color.addEventListener('click', (e) => this.pickColor(e))
 

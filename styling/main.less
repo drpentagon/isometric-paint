@@ -28,33 +28,43 @@ body {
 }
 
 .palette {
-	display: block;
-	border-right: 1px solid #ccc;
-	padding-left: 12px;
-	padding-top: 12px;
+	position:absolute;
+	z-index:10;
+	display: flex;
+	padding-left: 6px;
+	padding-top: 6px;
+	background-color: rgba(255,255,255,0.2);
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(5px);
+
+	@media only screen and (max-width: 1023px) {
+		border-bottom: 1px solid #ccc;
+		width:100%;
+		flex-direction: row;
+	}
+
+	@media only screen and (min-width: 1024px) {
+		border-right: 1px solid #ccc;
+		height:100%;
+		flex-direction: column;
+	}
 }
 
 .color {
-	margin-right: 12px;
-	margin-bottom: 12px;
-	padding:2px;
-	border:1px solid white;
+	margin-right: 8px;
+	margin-bottom: 8px;
 	cursor: pointer;
-	border-radius: 15px;
+	width: 60px;
+	height: 60px;
+	border-radius: 12px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
 	&--active {
+		width: 42px;
+		height: 42px;
 		border: 1px solid gray;
-	}
-
-	&__example {
-		width: 68px;
-		height: 68px;
-		display:block;
-		background-color:gray;
-		border-radius: 12px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
 	}
 
 	&__label {
@@ -71,7 +81,12 @@ body {
 }
 
 .graphics-wrapper {
-	flex:1;
+	position:absolute;
+	left:0;
+	right:0;
+	top:0;
+	bottom:0;
+	z-index:0;
 }
 
 .canvas {
