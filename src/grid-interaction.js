@@ -8,6 +8,8 @@ const CONTAINER = document.querySelector('.graphics-wrapper')
 export default class GridInteraction {
   constructor () {
     this.gh = new GraphicsHandler(CONTAINER)
+    this.isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints
+};
   }
 
   clear () {
@@ -17,7 +19,7 @@ export default class GridInteraction {
   render () {
     const x = MouseHandler.position().x
     const y = MouseHandler.position().y
-    if (x !== this.oldX && y !== this.oldY) {
+    if (!isTouchDevice && x !== this.oldX && y !== this.oldY) {
       this.oldX = x
       this.oldY = y
       const gPos = gtr.toGlobal(x, y)
