@@ -5,7 +5,7 @@ export function getIsometricCoordinate (x_, y_) {
   coord.a1 = Math.floor(coord.a1)
   coord.a2 = Math.floor(coord.a2)
   const vh = Math.floor(2 * x_ * ALPHA)
-  coord.right = (coord.a1 + coord.a2) % 2 === vh % 2
+  coord.right = Math.abs((coord.a1 + coord.a2) % 2) === vh % 2
 
   return coord
 }

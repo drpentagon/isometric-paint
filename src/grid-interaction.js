@@ -15,14 +15,17 @@ export default class GridInteraction {
   }
 
   render () {
-    const gPos = gtr.toGlobal(MouseHandler.position().x, MouseHandler.position().y)
-    const isoCoord = getIsometricCoordinate(gPos.x, gPos.y)
+    const x = MouseHandler.position().x
+    const y = MouseHandler.position().y
+    if (x !== this.oldX && y !== this.oldY) {
+      this.oldX = x
+      this.oldY = y
+      const gPos = gtr.toGlobal(x, y)
+      const isoCoord = getIsometricCoordinate(gPos.x, gPos.y)
 
-    this.gh.clearCanvas()
-    this.gh.fillStyle = 'rgba(0, 0, 0, 0.2)'
-    this.gh.drawTriangle(isoCoord.a1, isoCoord.a2, isoCoord.right)
-
-    this.gh.fillStyle = '#222222'
-    this.gh.writeText(`zoom: ${gtr.zoom}`, 20, 20)
+      this.gh.clearCanvas()
+      this.gh.fillStyle = 'rgba(0, 0, 0, 0.2)'
+      this.gh.drawTriangle(isoCoord.a1, isoCoord.a2, isoCoord.right)
+    }
   }
 }
