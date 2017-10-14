@@ -55,6 +55,7 @@ class Application {
   handlePanEnd (event) {
     this.updatePanPosition(event)
     this.panActive = false
+    this.renderAll()
   }
 
   updatePanPosition (event) {
