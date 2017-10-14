@@ -8,8 +8,8 @@ export default class IsometricGrid {
   constructor () {
     this.gh = new GraphicsHandler(CONTAINER)
 
-    this.gh.strokeStyle = '#ffdddd'
-    this.gh.fillStyle = 'rgba(0, 0, 0, 0.02)'
+    this.gh.strokeStyle = '#dddddd'
+    this.gh.fillStyle = 'rgba(200, 0, 0, 0.02)'
 
     this.setViewort()
   }

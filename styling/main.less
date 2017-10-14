@@ -27,37 +27,19 @@ body {
 	height:0;
 }
 
-.main-menu {
-	position:absolute;
-	z-index:10;
-	display: flex;
-	padding-left: 6px;
-	padding-top: 6px;
-	background-color: rgba(255,255,255,0.5);
-	-webkit-backdrop-filter: blur(50px);
-	backdrop-filter: blur(50px);
-	overflow: scroll;
-
-	@media only screen and (max-width: 1023px) {
-		border-bottom: 1px solid #ccc;
-		width:100%;
-		flex-direction: row;
-	}
-
-	@media only screen and (min-width: 1024px) {
-		border-right: 1px solid #ccc;
-		height:100%;
-		flex-direction: column;
-	}
+/*
+@media only screen and (max-width: 1023px) {
+	flex-direction: row;
 }
+*/
 
 .button {
 	margin-right: 8px;
 	margin-bottom: 8px;
 	cursor: pointer;
-	width: 66px;
-	height: 66px;
-	border-radius: 12px;
+	width: 40px;
+	height: 40px;
+	border-radius: 5px;
 	background-color: white;
 	display: flex;
 	justify-content: center;
@@ -72,40 +54,59 @@ body {
 
 	&__label {
 		display:block;
-		width:68px;
 		font-size: 18px;
-		text-align: center;
+		margin-top:2px;
 		cursor: pointer;
 
 		&--light {
 			color:white;
 		}
+
+		&--dark {
+			color:#111111;
+		}
 	}
 }
 
-.tools-menu {
+.menu-set {
 	position:absolute;
 	top:0;
 	right:0;
 	display:flex;
 	flex-direction:row-reverse;
+}
+
+.tools-menu {
+	display:flex;
+	flex-direction:row-reverse;
 	z-index:10;
-	padding-right:20px;
-	padding-top:8px;
+	margin-right:8px;
+	margin-top:8px;
+	padding:5px;
+	padding-left:0px;
+	padding-right:0px;
+	background-color: rgba(128,128,128,0.5);
+	-webkit-backdrop-filter: blur(50px);
+	backdrop-filter: blur(50px);
+	border-radius: 8px;
 }
 
 .tool {
-	width:30px;
-	height:30px;
-	background-color: rgba(255,255,255,0.5);
-	-webkit-backdrop-filter: blur(50px);
-	backdrop-filter: blur(50px);
-	border: 1px solid #999;
-	margin-left:20px;
-	border-radius: 45px;
+	width:40px;
+	height:40px;
+	border-radius: 5px;
+	margin-right:5px;
+	margin-left:5px;
 	cursor:pointer;
 	background-repeat: no-repeat;
 	background-position: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	&:hover, &--active {
+		background-color: rgba(128,128,128,0.3);
+	}
 }
 
 .tool--zoom-in {
@@ -118,6 +119,10 @@ body {
 
 .tool--erase {
 	background-image: url("../images/ic_clear_black_24px.svg");
+}
+
+.tool--paint {
+	background-image: url("../images/ic_create_black_24px.svg");
 }
 
 .graphics-wrapper {

@@ -22,7 +22,6 @@ class Application {
     hammer.on('panstart', (ev) => this.handlePanStart(ev))
     hammer.on('panmove', (ev) => this.updatePanPosition(ev))
     hammer.on('panend', (ev) => this.handlePanEnd(ev))
-    console.log(document.querySelector('.js_button__zoom-in'))
 
     document.querySelector('.js_button__zoom-in').addEventListener('click', (e) => {
       gtr.zoomIn()
@@ -30,7 +29,11 @@ class Application {
     })
 
     document.querySelector('.js_button__zoom-out').addEventListener('click', (e) => {
-      console.log('zoom out')
+      gtr.zoomOut()
+      this.renderAll()
+    })
+
+    document.querySelector('.js_button__erase').addEventListener('click', (e) => {
       gtr.zoomOut()
       this.renderAll()
     })

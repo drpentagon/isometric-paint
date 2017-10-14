@@ -15,7 +15,7 @@ class Palette {
     return this.currentColor
   }
 
-  addColor (name_, r_, g_, b_) {
+  addColor (name_, r_, g_, b_, number_) {
     let textModifier = 'button__label--light'
     const rgb = `rgb(${r_}, ${g_}, ${b_})`
 
@@ -25,10 +25,10 @@ class Palette {
 
     const label = document.createElement('label')
     label.className = `button__label ${textModifier}`
-    label.innerHTML = name_
+    label.innerHTML = number_
 
     const color = document.createElement('article')
-    color.className = 'button'
+    color.className = 'tool'
     color.dataset.color = rgb
     color.style.backgroundColor = rgb
     color.appendChild(label)
