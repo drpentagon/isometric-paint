@@ -33,7 +33,7 @@ body {
 	display: flex;
 	padding-left: 6px;
 	padding-top: 6px;
-	background-color: rgba(255,255,255,0.2);
+	background-color: rgba(255,255,255,0.5);
 	-webkit-backdrop-filter: blur(50px);
 	backdrop-filter: blur(50px);
 	overflow: scroll;
@@ -81,6 +81,43 @@ body {
 			color:white;
 		}
 	}
+}
+
+.tools-menu {
+	position:absolute;
+	top:0;
+	right:0;
+	display:flex;
+	flex-direction:row-reverse;
+	z-index:10;
+	padding-right:20px;
+	padding-top:8px;
+}
+
+.tool {
+	width:30px;
+	height:30px;
+	background-color: rgba(255,255,255,0.5);
+	-webkit-backdrop-filter: blur(50px);
+	backdrop-filter: blur(50px);
+	border: 1px solid #999;
+	margin-left:20px;
+	border-radius: 45px;
+	cursor:pointer;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.tool--zoom-in {
+	background-image: url("../images/ic_add_black_24px.svg");
+}
+
+.tool--zoom-out {
+	background-image: url("../images/ic_remove_black_24px.svg");
+}
+
+.tool--erase {
+	background-image: url("../images/ic_clear_black_24px.svg");
 }
 
 .graphics-wrapper {

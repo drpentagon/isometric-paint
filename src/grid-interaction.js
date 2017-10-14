@@ -4,12 +4,10 @@ import MouseHandler from './mouse-handler.js'
 import {getIsometricCoordinate} from './isometric-math.js'
 
 const CONTAINER = document.querySelector('.graphics-wrapper')
-
 export default class GridInteraction {
   constructor () {
     this.gh = new GraphicsHandler(CONTAINER)
     this.isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints
-};
   }
 
   clear () {
@@ -19,7 +17,7 @@ export default class GridInteraction {
   render () {
     const x = MouseHandler.position().x
     const y = MouseHandler.position().y
-    if (!isTouchDevice && x !== this.oldX && y !== this.oldY) {
+    if (!this.isTouchDevice && x !== this.oldX && y !== this.oldY) {
       this.oldX = x
       this.oldY = y
       const gPos = gtr.toGlobal(x, y)
