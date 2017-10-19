@@ -22,6 +22,8 @@ export default class Layer {
 
   removeTriangle (a1, a2, right) {
     delete this.triangles[`${a1}_${a2}_${right}`]
+
+    localStorage.painting = JSON.stringify(this.triangles)
   }
 
   render () {
@@ -33,13 +35,5 @@ export default class Layer {
       this.gh.strokeStyle = color
       this.gh.drawTriangle(a1, a2, right)
     })
-    /*
-    this.triangles.map((t) => {
-      const {a1, a2, right, color} = t
-      this.gh.fillStyle = color
-      this.gh.strokeStyle = color
-      this.gh.drawTriangle(a1, a2, right)
-    })
-    */
   }
 }
