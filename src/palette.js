@@ -16,18 +16,17 @@ class Palette {
   }
 
   addColor (name_, r_, g_, b_, number_) {
-    let textModifier = 'button__label--light'
+    let textModifier = 'tool__label--light'
     const rgb = `rgb(${r_}, ${g_}, ${b_})`
-
     if (this.getLuminance(r_, g_, b_) > 128) {
-      textModifier = 'button__label--dark'
+      textModifier = 'tool__label--dark'
     }
 
     const label = document.createElement('label')
-    label.className = `button__label ${textModifier}`
+    label.className = `tool__label ${textModifier}`
     label.innerHTML = number_
 
-    const color = document.createElement('article')
+    const color = document.createElement('a')
     color.className = 'tool'
     color.dataset.color = rgb
     color.style.backgroundColor = rgb
@@ -39,12 +38,12 @@ class Palette {
 
   pickColor (e) {
     const color = e.currentTarget
-    const previous = document.querySelector('.color--active')
+    const previous = document.querySelector('.tools-menu--colors .tool--active')
     if (previous) {
-      previous.classList.remove('color--active')
+      previous.classList.remove('tool--active')
     }
 
-    color.classList.add('color--active')
+    color.classList.add('tool--active')
     this.currentColor = color.dataset.color
   }
 

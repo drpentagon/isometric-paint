@@ -33,41 +33,6 @@ body {
 }
 */
 
-.button {
-	margin-right: 8px;
-	margin-bottom: 8px;
-	cursor: pointer;
-	width: 40px;
-	height: 40px;
-	border-radius: 5px;
-	background-color: white;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
-
-	&--active, &--bordered {
-		width: 64px;
-		height: 64px;
-		border: 1px solid gray;
-	}
-
-	&__label {
-		display:block;
-		font-size: 18px;
-		margin-top:2px;
-		cursor: pointer;
-
-		&--light {
-			color:white;
-		}
-
-		&--dark {
-			color:#111111;
-		}
-	}
-}
-
 .menu-set {
 	position:absolute;
 	top:0;
@@ -80,23 +45,25 @@ body {
 	display:flex;
 	flex-direction:row-reverse;
 	z-index:10;
+	height:50px;
 	margin-right:8px;
 	margin-top:8px;
-	padding:5px;
 	padding-left:0px;
 	padding-right:0px;
-	background-color: rgba(128,128,128,0.5);
+	background-color: rgba(0,0,0,0.35);
 	-webkit-backdrop-filter: blur(50px);
 	backdrop-filter: blur(50px);
-	border-radius: 8px;
+	border-radius: 10px;
+
+	&--colors {
+		margin-right: 6px;
+		margin-top: 6px;
+	}
 }
 
 .tool {
-	width:40px;
-	height:40px;
-	border-radius: 5px;
-	margin-right:5px;
-	margin-left:5px;
+	width:50px;
+	height:50px;
 	cursor:pointer;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -104,8 +71,44 @@ body {
 	justify-content: center;
 	align-items: center;
 
+	&:first-child {
+		border-top-right-radius: 10px;
+		border-bottom-right-radius: 10px;
+	}
+
+	&:last-child {
+		border-top-left-radius: 10px;
+		border-bottom-left-radius: 10px;
+	}
+
 	&:hover, &--active {
-		background-color: rgba(128,128,128,0.3);
+		background-color: rgba(0,0,0,0.2);
+	}
+
+	.tools-menu--colors & {
+		border-top:2px solid #FFF;
+		border-bottom:2px solid #FFF;
+		&:first-child {
+			border-right:2px solid #FFF;
+		}
+		&:last-child {
+			border-left:2px solid #FFF;
+		}
+	}
+
+	&__label {
+		display:block;
+		font-size: 20px;
+		margin-top:2px;
+		cursor: pointer;
+
+		&--light {
+			color:white;
+		}
+
+		&--dark {
+			color:#111111;
+		}
 	}
 }
 
@@ -123,6 +126,10 @@ body {
 
 .tool--paint {
 	background-image: url("../images/ic_create_black_24px.svg");
+}
+
+.tool--picker {
+	background-image: url("../images/ic_colorize_black_24px.svg");
 }
 
 .graphics-wrapper {
