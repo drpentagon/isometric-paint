@@ -8,17 +8,11 @@ import Palette from './palette.js'
 const CONTAINER = document.querySelector('.graphics-wrapper')
 const BTN_ZOOM_IN = document.querySelector('.js_button__zoom-in')
 const BTN_ZOOM_OUT = document.querySelector('.js_button__zoom-out')
-const BTN_ERASE = document.querySelector('.js_button__erase')
-const BTN_PAINT = document.querySelector('.js_button__paint')
-
-const PAINT = 'PAINT'
-const ERASE = 'ERASE'
 
 class Application {
   constructor () {
     gtr.zoom = 32
     gtr.pan = {x: 0, y: 0}
-    this.state = PAINT
 
     this.background = new IsometricGrid()
     this.layer = new Layer()
@@ -26,10 +20,15 @@ class Application {
     this.hud = new GridInteraction()
 
     var hammer = new Hammer(CONTAINER)
+
     hammer.on('tap', (ev) => this.handleMouseCLick(ev))
     hammer.on('panstart', (ev) => this.handlePanStart(ev))
     hammer.on('panmove', (ev) => this.updatePanPosition(ev))
     hammer.on('panend', (ev) => this.handlePanEnd(ev))
+
+    var hammerManager = new Hammer.Manager(CONTAINER)
+    hammerManager.add(new Hammer.Press({event: 'press', time: 500}))
+    hammerManager.on('press', (ev) => this.handlePress(ev))
 
     BTN_ZOOM_IN.addEventListener('click', (e) => {
       gtr.zoomIn()
@@ -40,40 +39,25 @@ class Application {
       gtr.zoomOut()
       this.renderAll()
     })
-
-    BTN_ERASE.addEventListener('click', (e) => {
-      BTN_ERASE.classList.add('tool--active')
-      BTN_PAINT.classList.remove('tool--active')
-      this.state = ERASE
-    })
-
-    BTN_PAINT.addEventListener('click', (e) => {
-      BTN_PAINT.classList.add('tool--active')
-      BTN_ERASE.classList.remove('tool--active')
-      this.state = PAINT
-    })
   }
 
   handleMouseCLick (event) {
+    const isoCoord = this.getIsometricCoordinate(event)
+    this.layer.addTriangle(isoCoord.a1, isoCoord.a2, isoCoord.right, Palette.color)
+    this.layer.render()
+  }
+
+  handlePress (event) {
+    const isoCoord = this.getIsometricCoordinate(event)
+    this.layer.removeTriangle(isoCoord.a1, isoCoord.a2, isoCoord.right)
+    this.layer.render()
+  }
+
+  getIsometricCoordinate (event) {
     const x = event.center.x - CONTAINER.getBoundingClientRect().left
     const y = event.center.y - CONTAINER.getBoundingClientRect().top
     const gPos = gtr.toGlobal(x, y)
-    const isoCoord = getIsometricCoordinate(gPos.x, gPos.y)
-
-    switch (this.state) {
-      case PAINT:
-        this.layer.addTriangle(isoCoord.a1, isoCoord.a2, isoCoord.right, Palette.color)
-        break
-
-      case ERASE:
-        this.layer.removeTriangle(isoCoord.a1, isoCoord.a2, isoCoord.right)
-        break
-
-      default:
-        this.layer.addTriangle(isoCoord.a1, isoCoord.a2, isoCoord.right, Palette.color)
-    }
-
-    this.layer.render()
+    return getIsometricCoordinate(gPos.x, gPos.y)
   }
 
   handlePanStart (event) {
