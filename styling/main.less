@@ -68,6 +68,7 @@ body {
 	background-repeat: no-repeat;
 	background-position: center;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 
@@ -101,6 +102,8 @@ body {
 		font-size: 20px;
 		margin-top:2px;
 		cursor: pointer;
+		text-transform: uppercase;
+		line-height:18px;
 
 		&--light {
 			color:white;
@@ -109,6 +112,11 @@ body {
 		&--dark {
 			color:#111111;
 		}
+	}
+
+	&__name {
+		font-size: 12px;
+		text-align: center;
 	}
 }
 
@@ -130,6 +138,63 @@ body {
 
 .tool--picker {
 	background-image: url("../images/ic_colorize_black_24px.svg");
+}
+
+.palette {
+	position: absolute;
+	left:0px;
+	right:0px;
+	top:0px;
+	bottom:0px;
+	z-index: 20;
+	background-color: rgba(255,255,255,0.85);
+	-webkit-backdrop-filter: blur(50px);
+	backdrop-filter: blur(50px);
+	flex-direction: column;
+	display:flex;
+	justify-content: flex-start;
+	overflow-y: scroll;
+	 -webkit-overflow-scrolling: touch;
+
+	&__section {
+		width: 296px;
+		margin: 0 auto;
+		padding: 5px;
+
+		@media only screen and (min-width: 370px) {width: 360px}
+		@media only screen and (min-width: 454px) {width: 444px}
+		@media only screen and (min-width: 528px) {width: 518px}
+		@media only screen and (min-width: 602px) {width: 592px}
+		@media only screen and (min-width: 676px) {width: 666px}
+		@media only screen and (min-width: 750px) {width: 740px}
+		@media only screen and (min-width: 824px) {width: 814px}
+		@media only screen and (min-width: 898px) {width: 888px}
+		@media only screen and (min-width: 974px) {width: 964px}
+		@media only screen and (min-width: 1046px) {width: 1036px}
+		@media only screen and (min-width: 1120px) {width: 1110px}
+		@media only screen and (min-width: 1194px) {width: 1184px}
+		@media only screen and (min-width: 1268px) {width: 1258px}
+		@media only screen and (min-width: 1342px) {width: 1332px}
+		@media only screen and (min-width: 1416px) {width: 1406px}
+		@media only screen and (min-width: 1490px) {width: 1480px}
+
+		flex-wrap: wrap;
+		flex-direction: row;
+		display:flex;
+		justify-content: flex-start;
+	}
+
+	&__color {
+		width: 56px;
+		height: 56px;
+		padding: 3px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin:5px;
+		border-radius: 10px;
+		flex-direction: column;
+	}
 }
 
 .graphics-wrapper {

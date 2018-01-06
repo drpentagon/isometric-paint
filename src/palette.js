@@ -1,39 +1,69 @@
+import {palette} from './resources/copic.js'
+
 class Palette {
   constructor () {
-    this.palette = document.querySelector('.main-menu')
+    this.palette = document.querySelector('.palette')
+    const wrapper = document.createElement('section')
+    wrapper.className = `palette__section`
+
+    palette.forEach((s) => {
+      s.colors.forEach((c) => {
+        wrapper.appendChild(this.createColor(c))
+      })
+    })
+
+    this.palette.appendChild(wrapper)
     this.currentColor = 'rgb(49, 43, 43)'
-
-    this.addColor('Black', 49, 43, 43, '100')
-    this.addColor('Yellow', 254, 245, 108, 'Y06')
-    this.addColor('Chrome Orange', 254, 195, 105, 'YR04')
-    this.addColor('Cadmium Orange', 242, 111, 57, 'YR07')
-    this.addColor('Cadmium Red', 241, 80, 98, 'R27')
-    this.addColor('Prussian Blue', 43, 100, 169, 'B39')
   }
 
-  get color () {
-    return this.currentColor
+  addSection (section_) {
+    const {colors} = section_
+
+    const colorWrapper = document.createElement('div')
+    colorWrapper.className = `palette__section-colors`
+    colors.forEach((c) => {
+      colorWrapper.appendChild(this.createColor(c))
+    })
   }
 
-  addColor (name_, r_, g_, b_, number_) {
+  createColor (color_) {
+    const rgb = this.hexToRgb(color_.color)
     let textModifier = 'tool__label--light'
-    const rgb = `rgb(${r_}, ${g_}, ${b_})`
-    if (this.getLuminance(r_, g_, b_) > 128) {
+    const rgbValue = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`
+    if (this.getLuminance(rgb.r, rgb.g, rgb.b) > 128) {
       textModifier = 'tool__label--dark'
     }
 
     const label = document.createElement('label')
     label.className = `tool__label ${textModifier}`
-    label.innerHTML = number_
+    label.innerHTML = color_.id
+
+    const name = document.createElement('label')
+    name.className = `tool__name ${textModifier}`
+    name.innerHTML = color_.name
 
     const color = document.createElement('a')
-    color.className = 'tool'
-    color.dataset.color = rgb
-    color.style.backgroundColor = rgb
+    color.className = 'palette__color'
+    color.dataset.color = rgbValue
+    color.style.backgroundColor = rgbValue
     color.appendChild(label)
+    color.appendChild(name)
     color.addEventListener('click', (e) => this.pickColor(e))
 
-    this.palette.appendChild(color)
+    return color
+  }
+
+  hexToRgb (hex_) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex_)
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null
+  }
+
+  get color () {
+    return this.currentColor
   }
 
   pickColor (e) {
