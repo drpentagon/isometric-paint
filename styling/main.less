@@ -151,10 +151,29 @@ body {
 	-webkit-backdrop-filter: blur(50px);
 	backdrop-filter: blur(50px);
 	flex-direction: column;
-	display:flex;
+	display:none;
 	justify-content: flex-start;
 	overflow-y: scroll;
 	 -webkit-overflow-scrolling: touch;
+
+	 &__top {
+		 display:flex;
+		 flex-direction: row-reverse;
+	 }
+
+	 &__close-button {
+		 width:50px;
+	 	height:50px;
+	 	cursor:pointer;
+	 	background-repeat: no-repeat;
+	 	background-position: center;
+		display: block;
+		background-image: url("../images/ic_clear_black_24px.svg");
+	 }
+
+	 .show-palette & {
+		 display: block;
+	 }
 
 	&__section {
 		width: 296px;

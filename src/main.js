@@ -8,6 +8,8 @@ import Palette from './palette.js'
 const CONTAINER = document.querySelector('.graphics-wrapper')
 const BTN_ZOOM_IN = document.querySelector('.js_button__zoom-in')
 const BTN_ZOOM_OUT = document.querySelector('.js_button__zoom-out')
+const BTN_CLOSE_PALETTE = document.querySelector('.js_button__close-palette')
+const BTN_OPEN_PALETTE = document.querySelector('.js_button__open-palette')
 
 class Application {
   constructor () {
@@ -39,6 +41,15 @@ class Application {
       gtr.zoomOut()
       this.renderAll()
     })
+
+    BTN_CLOSE_PALETTE.addEventListener('click', (e) => {
+      document.querySelector('html').classList.remove('show-palette')
+    })
+/*
+    BTN_OPEN_PALETTE.addEventListener('click', (e) => {
+      document.querySelector('html').classList.add('show-palette')
+    })
+    */
   }
 
   handleMouseCLick (event) {

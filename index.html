@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="show-palette">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
@@ -17,7 +17,12 @@
     </menu>
     <menu class="main-menu tools-menu tools-menu--colors"></menu>
   </div>
-  <div class="palette"></div>
+  <div class="palette">
+    <div class="palette__top">
+      <a class="palette__close-button js_button__close-palette" title="Close"></a>
+    </div>
+
+  </div>
   <main class="graphics-wrapper"></main>
 	<script src="./build/bundle.js"></script>
 </body>
