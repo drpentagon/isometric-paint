@@ -45,11 +45,10 @@ class Application {
     BTN_CLOSE_PALETTE.addEventListener('click', (e) => {
       document.querySelector('html').classList.remove('show-palette')
     })
-/*
+
     BTN_OPEN_PALETTE.addEventListener('click', (e) => {
       document.querySelector('html').classList.add('show-palette')
     })
-    */
   }
 
   handleMouseCLick (event) {
