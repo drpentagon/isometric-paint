@@ -2,7 +2,7 @@ import {palette} from './resources/copic.js'
 
 class Palette {
   constructor () {
-    this.palette = document.querySelector('.palette')
+    this.palette = document.querySelector('.palette__content')
     const wrapper = document.createElement('section')
     wrapper.className = `palette__section`
 

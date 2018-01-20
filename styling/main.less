@@ -157,13 +157,36 @@ body {
 	flex-direction: column;
 	display:none;
 	justify-content: flex-start;
-	overflow-y: scroll;
-	 -webkit-overflow-scrolling: touch;
 
-	 &__top {
-		 display:flex;
-		 flex-direction: row-reverse;
-	 }
+	.show-palette & {
+		display: block;
+	}
+
+	&__top {
+		display:flex;
+		flex-direction: row-reverse;
+		flex-grow: 0;
+		min-height: 50px;
+		position: relative;
+		z-index:10;
+		background-color: rgba(255,255,255,0.35);
+		-webkit-backdrop-filter: blur(50px);
+		backdrop-filter: blur(50px);
+	}
+
+	&__content {
+	 display: block;
+	 flex-grow: 1;
+	 overflow-y: scroll;
+		-webkit-overflow-scrolling: touch;
+		padding-top: 50px;
+		position: absolute;
+		z-index:0;
+		left:0px;
+		right:0px;
+		top:0px;
+		bottom:0px;
+	}
 
 	 &__close-button {
 		 width:50px;
@@ -173,10 +196,6 @@ body {
 	 	background-position: center;
 		display: block;
 		background-image: url("../images/ic_clear_black_24px.svg");
-	 }
-
-	 .show-palette & {
-		 display: block;
 	 }
 
 	&__section {
