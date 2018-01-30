@@ -11,23 +11,23 @@
   <p class="fontLoader">Loads Miso typeface</p>
 
   <div class="menu-set">
-    <menu class="tools-menu">
+    <menu class="menu menu--tools">
       <a class="tool tool--zoom-in js_button__zoom-in" title="Zoom In"></a>
       <a class="tool tool--zoom-out js_button__zoom-out" title="Zoom Out"></a>
     </menu>
-    <menu class="main-menu tools-menu tools-menu--colors">
-      <a class="tool tool--open-palette js_button__open-palette" title="Open palette"></a>
+    <menu class="main-menu menu menu--colors">
+      <a class="tool js_color" style="background-color:#fef56c"></a>
+      <a class="tool js_color" style="background-color:#fec369"></a>
+      <a class="tool js_color" style="background-color:#f26f39"></a>
     </menu>
   </div>
-  <div class="palette">
-    <div class="palette__top">
-      <a class="palette__close-button js_button__close-palette" title="Close"></a>
-    </div>
-    <div class="palette__content">
-
-    </div>
+  <div class="palette"></div>
+  <div class="palette__arrow js_palette-arrow">
+    <div></div>
   </div>
+  <div class="graphics-lock js_graphics-lock"></div>
   <main class="graphics-wrapper"></main>
+
 	<script src="./build/bundle.js"></script>
 </body>
 </html>

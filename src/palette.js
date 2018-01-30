@@ -1,8 +1,13 @@
 import {palette} from './resources/copic.js'
 
+const PALETTE_ARROW = document.querySelector('.js_palette-arrow')
+const GRAPHICS_LOCK = document.querySelector('.js_graphics-lock')
+
 class Palette {
   constructor () {
-    this.palette = document.querySelector('.palette__content')
+    this.palette = document.querySelector('.palette')
+    this.isOpen = false
+    this.currentElement = null
     const wrapper = document.createElement('section')
     wrapper.className = `palette__section`
 
@@ -14,16 +19,51 @@ class Palette {
 
     this.palette.appendChild(wrapper)
     this.currentColor = 'rgb(49, 43, 43)'
+
+    this.setupInteraction()
   }
 
-  addSection (section_) {
-    const {colors} = section_
+  setupInteraction () {
+    const colors = document.querySelectorAll('.js_color')
 
-    const colorWrapper = document.createElement('div')
-    colorWrapper.className = `palette__section-colors`
-    colors.forEach((c) => {
-      colorWrapper.appendChild(this.createColor(c))
+    colors.forEach((element) => {
+      const pressHandler = new Hammer.Manager(element)
+      pressHandler.add(new Hammer.Press({event: 'press', time: 500}))
+      pressHandler.on('press', (ev) => {
+        this.showPalette(element)
+      })
+
+      element.addEventListener('click', () => {
+        if (this.isOpen) {
+          if (this.currentElement === element) {
+            this.closePalette()
+          } else {
+            this.showPalette(element)
+          }
+        } else {
+          this.currentColor = element.style.backgroundColor
+        }
+      })
     })
+
+    GRAPHICS_LOCK.addEventListener('click', () => this.hidePalette())
+  }
+
+  showPalette (element) {
+    this.currentElement = element
+    var rect = element.getBoundingClientRect()
+    PALETTE_ARROW.style.left = parseInt(rect.x - 11 + rect.width / 2) + 'px'
+    document.querySelector('html').classList.add('show-palette')
+    GRAPHICS_LOCK.style.display = 'block'
+    this.isOpen = true
+  }
+
+  hidePalette () {
+    this.isOpen = false
+    document.querySelector('html').classList.remove('show-palette')
+    setTimeout(() => {
+      GRAPHICS_LOCK.style.display = 'none'
+    }, 200)
   }
 
   createColor (color_) {
@@ -68,13 +108,15 @@ class Palette {
 
   pickColor (e) {
     const color = e.currentTarget
+    this.currentElement.style.backgroundColor = color.style.backgroundColor
+    /*
     const previous = document.querySelector('.tools-menu--colors .tool--active')
     if (previous) {
       previous.classList.remove('tool--active')
     }
 
     color.classList.add('tool--active')
-    this.currentColor = color.dataset.color
+    this.currentColor = color.dataset.color */
   }
 
   getLuminance (r_, g_, b_) {

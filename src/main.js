@@ -8,8 +8,9 @@ import Palette from './palette.js'
 const CONTAINER = document.querySelector('.graphics-wrapper')
 const BTN_ZOOM_IN = document.querySelector('.js_button__zoom-in')
 const BTN_ZOOM_OUT = document.querySelector('.js_button__zoom-out')
-const BTN_CLOSE_PALETTE = document.querySelector('.js_button__close-palette')
-const BTN_OPEN_PALETTE = document.querySelector('.js_button__open-palette')
+
+// const BTN_CLOSE_PALETTE = document.querySelector('.js_button__close-palette')
+// const BTN_OPEN_PALETTE = document.querySelector('.js_button__open-palette')
 
 class Application {
   constructor () {
@@ -28,7 +29,7 @@ class Application {
     hammer.on('panmove', (ev) => this.updatePanPosition(ev))
     hammer.on('panend', (ev) => this.handlePanEnd(ev))
 
-    var hammerManager = new Hammer.Manager(CONTAINER)
+    const hammerManager = new Hammer.Manager(CONTAINER)
     hammerManager.add(new Hammer.Press({event: 'press', time: 500}))
     hammerManager.on('press', (ev) => this.handlePress(ev))
 
@@ -40,14 +41,6 @@ class Application {
     BTN_ZOOM_OUT.addEventListener('click', (e) => {
       gtr.zoomOut()
       this.renderAll()
-    })
-
-    BTN_CLOSE_PALETTE.addEventListener('click', (e) => {
-      document.querySelector('html').classList.remove('show-palette')
-    })
-
-    BTN_OPEN_PALETTE.addEventListener('click', (e) => {
-      document.querySelector('html').classList.add('show-palette')
     })
   }
 
